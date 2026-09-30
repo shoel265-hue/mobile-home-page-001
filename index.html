@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FACILITY MANAGEMENT SYSTEM - 통합 포털</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; margin: 0; padding: 0; }
+        body, html { width: 100%; height: 100%; background-color: #f4f6f9; color: #333; overflow: hidden; }
+
+        /* ================= 1. 로그인 화면 스타일 ================= */
+        #login-wrapper {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            display: flex; justify-content: center; align-items: center; z-index: 9999;
+        }
+        .login-card {
+            width: 100%; max-width: 500px; background: #fff; border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3); overflow: hidden;
+        }
+        .login-banner {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80') center/cover;
+            padding: 40px 30px; color: white;
+        }
+        .login-banner h1 { font-size: 28px; font-weight: 900; letter-spacing: 2px; margin-bottom: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .login-banner p { font-size: 13px; opacity: 0.9; }
+        
+        .login-form-area { padding: 30px; background: #f8fafc; display: flex; flex-direction: column; gap: 12px; }
+        .login-title-bar { font-size: 14px; font-weight: bold; color: #475569; letter-spacing: 1px; margin-bottom: 5px; border-bottom: 2px solid #cbd5e1; padding-bottom: 5px; }
+        
+        .input-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+        .input-row label { width: 90px; font-size: 12px; font-weight: bold; color: #64748b; text-align: right; }
+        .input-row select, .input-row input { flex: 1; height: 32px; padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px; background-color: #fff; cursor: pointer; }
+        
+        .btn-login { width: 100px; height: 75px; background: #1d4ed8; color: white; border: none; border-radius: 4px; font-weight: bold; font-size: 14px; cursor: pointer; transition: 0.2s; }
+        .btn-login:hover { background: #1e40af; }
+        .login-footer { background: #0f172a; color: #94a3b8; text-align: center; padding: 10px; font-size: 11px; }
+
+        /* ================= 2. 대시보드 메인 화면 스타일 ================= */
+        #main-wrapper {
+            width: 100vw; height: 100vh; display: flex; overflow: hidden;
+        }
+        .sidebar {
+            width: 260px; background-color: #1e293b; color: #cbd5e1; display: flex; flex-direction: column; border-right: 1px solid #334155; flex-shrink: 0; z-index: 10;
+        }
+        .sidebar-header {
+            padding: 20px 15px; background-color: #0f172a; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #334155;
+        }
+        .user-avatar { width: 36px; height: 36px; background: #475569; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #fff; }
+        .user-info .name { font-weight: bold; font-size: 13px; color: #fff; }
+        .user-info .role { font-size: 11px; color: #94a3b8; }
+
+        .sidebar-menu { flex: 1; padding: 15px 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 5px; }
+        .menu-category { font-size: 11px; font-weight: bold; color: #64748b; padding: 8px 10px 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .menu-item {
+            display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border-radius: 6px; color: #cbd5e1; text-decoration: none; font-size: 13px; transition: 0.2s; cursor: pointer;
+        }
+        .menu-item:hover, .menu-item.active { background-color: #334155; color: #ffffff; }
+        .menu-item-left { display: flex; align-items: center; gap: 10px; }
+        .menu-item span.icon { font-size: 15px; }
+        .arrow { font-size: 10px; transition: transform 0.2s; }
+
+        .sub-menu {
+            display: none; flex-direction: column; gap: 3px; padding-left: 28px; margin: 3px 0;
+        }
+        .sub-menu.open { display: flex; }
+        .sub-item {
+            padding: 8px 10px; border-radius: 4px; color: #94a3b8; text-decoration: none; font-size: 12px; cursor: pointer; transition: 0.2s;
+        }
+        .sub-item:hover, .sub-item.active { background-color: #334155; color: #ffffff; font-weight: bold; }
+
+        .content-area { flex: 1; display: flex; flex-direction: column; background-color: #f8fafc; overflow: hidden; position: relative; }
+        .top-navbar {
+            height: 55px; background: #ffffff; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; flex-shrink: 0; z-index: 10;
+        }
+        .top-title { font-size: 15px; font-weight: bold; color: #1e293b; }
+        .top-right-btns { display: flex; gap: 10px; }
+        .top-btn { padding: 5px 12px; background: #e2e8f0; border: none; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; color: #334155; }
+        .top-btn:hover { background: #cbd5e1; }
+        .top-btn.logout { background: #fee2e2; color: #dc2626; }
+        .top-btn.logout:hover { background: #fecaca; }
+
+        .viewport { flex: 1; position: relative; overflow-y: auto; display: flex; justify-content: center; align-items: stretch; background-color: #f8fafc; }
+        
+        .home-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(15, 23, 42, 0.5), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+            display: flex; justify-content: center; align-items: center; z-index: 1;
+        }
+
+        .welcome-card-glass {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 45px 50px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            max-width: 650px;
+            width: 90%;
+            z-index: 2;
+        }
+        .welcome-card-glass h2 { color: #0f172a; margin-bottom: 12px; font-size: 24px; font-weight: 800; }
+        .welcome-card-glass p { color: #334155; font-size: 14px; line-height: 1.6; font-weight: 500; }
+
+        /* 시스템 환경설정 화면 스타일 */
+        .setting-panel {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #f8fafc; z-index: 5; display: none; padding: 30px; overflow-y: auto;
+        }
+        .setting-container { max-width: 800px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .setting-container h2 { font-size: 18px; color: #1e293b; margin-bottom: 15px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+        .setting-group { margin-bottom: 15px; }
+        .setting-group label { display: block; font-size: 12px; font-weight: bold; color: #475569; margin-bottom: 5px; }
+        .setting-group input { width: 100%; height: 34px; padding: 4px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px; }
+        .setting-btn { padding: 8px 16px; background: #2563eb; color: white; border: none; border-radius: 4px; font-weight: bold; font-size: 13px; cursor: pointer; transition: 0.2s; }
+        .setting-btn:hover { background: #1d4ed8; }
+
+        .team-table { width: 100%; border-collapse: collapse; margin-top: 10px; margin-bottom: 15px; }
+        .team-table th, .team-table td { border: 1px solid #cbd5e1; padding: 6px 8px; text-align: center; font-size: 12px; }
+        .team-table th { background-color: #f1f5f9; color: #334155; }
+        .team-table input { width: 100%; height: 26px; padding: 2px 5px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 12px; text-align: center; }
+        .btn-del { padding: 3px 8px; background: #dc2626; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 11px; }
+        .btn-del:hover { background: #b91c1c; }
+        .btn-add { padding: 4px 10px; background: #10b981; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; margin-bottom: 10px; }
+        .btn-add:hover { background: #059669; }
+
+        #content-iframe {
+            width: 100%; height: 100%; border: none; background: #fff; display: none;
+        }
+
+        /* ================= 📱 모바일 반응형 전용 스타일 (스마트폰 화면 폭 768px 이하에서만 작동!) ================= */
+        @media screen and (max-width: 768px) {
+            #main-wrapper {
+                flex-direction: column; /* PC에서는 좌우 배치, 스마트폰에서는 상하 배치로 전환하여 화면 꽉 채우기 */
+            }
+            .sidebar {
+                width: 100% !important;
+                height: auto;
+                max-height: 180px; /* 스마트폰에서 메뉴가 화면을 너무 가리지 않도록 높이 제한 및 스크롤 처리 */
+                overflow-y: auto;
+            }
+            .sidebar-header {
+                padding: 10px 15px;
+            }
+            .sidebar-menu {
+                padding: 5px 10px;
+            }
+            .content-area {
+                flex: 1;
+                width: 100%;
+                height: auto;
+            }
+            .top-navbar {
+                padding: 0 10px;
+                height: 45px;
+            }
+            .top-title {
+                font-size: 13px;
+            }
+            .top-btn {
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+            .welcome-card-glass {
+                padding: 25px 20px;
+            }
+            .welcome-card-glass h2 {
+                font-size: 18px;
+            }
+            .welcome-card-glass p {
+                font-size: 12px;
+            }
+        }
+
+        @media print {
+            @page { size: A4; margin: 10mm; }
+            body, html { overflow: visible !important; height: auto !important; background: #fff !important; -webkit-print-color-adjust: exact; }
+            .sidebar, .top-navbar, #login-wrapper, #setting-panel, .home-bg { display: none !important; }
+            .content-area, .viewport { height: auto !important; overflow: visible !important; position: static !important; display: block !important; }
+            #content-iframe { display: block !important; width: 100% !important; height: auto !important; border: none !important; position: static !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= 1. 로그인 섹션 ================= -->
+    <div id="login-wrapper">
+        <div class="login-card">
+            <div class="login-banner">
+                <h1>FACILITY PORTAL</h1>
+                <p>통합 시설관리 시스템에 오신 것을 환영합니다.<br>안전하고 체계적인 관리를 시작하세요.</p>
+            </div>
+            <div class="login-form-area">
+                <div class="login-title-bar">MEMBER ACCESS</div>
+                <div style="display: flex; gap: 15px; align-items: center;">
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
+                        <div class="input-row">
+                            <label>USER ID</label>
+                            <select id="login-id-select"><!-- 동적 로드 --></select>
+                        </div>
+                        <div class="input-row">
+                            <label>PASSWORD</label>
+                            <input type="password" id="login-pw" placeholder="비밀번호 입력" autocomplete="current-password" onkeyup="if(event.key==='Enter') processLogin()">
+                        </div>
+                    </div>
+                    <button class="btn-login" onclick="processLogin()">LOG IN</button>
+                </div>
+            </div>
+            <div class="login-footer">COPYRIGHT &copy; FACILITY MANAGEMENT. ALL RIGHTS RESERVED.</div>
+        </div>
+    </div>
+
+
+    <!-- ================= 2. 대시보드 메인 섹션 ================= -->
+    <div id="main-wrapper" style="display: none;">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="user-avatar">👤</div>
+                <div class="user-info">
+                    <div class="name"><span id="display-name">관리자</span> (<span id="display-id">admin</span>)</div>
+                    <div class="role" id="display-role">최고관리자</div>
+                </div>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-category">업무 관리</div>
+                
+                <div class="menu-item" onclick="toggleSubMenu('worklog-sub', this)">
+                    <div class="menu-item-left">
+                        <span class="icon">📋</span> <span>1. 업무일지</span>
+                    </div>
+                    <span class="arrow" id="arrow-worklog">▼</span>
+                </div>
+                <div class="sub-menu open" id="worklog-sub">
+                    <a class="sub-item" onclick="checkWorkLogAccess('geonchuk', 'https://shoel265-hue.github.io/g-work-log/', '건축 일일업무일지', this)">건축 일일업무일지</a>
+                    <a class="sub-item" onclick="checkWorkLogAccess('refrig', 'https://shoel265-hue.github.io/n-work-log/', '냉동 일일업무일지', this)">냉동 일일업무일지</a>
+                    <a class="sub-item" onclick="checkWorkLogAccess('mihwa', 'https://shoel265-hue.github.io/m-work-log/', '미화 일일업무일지', this)">미화 일일업무일지</a>
+                    <a class="sub-item" onclick="checkWorkLogAccess('seolbi', 'https://shoel265-hue.github.io/s-work-log/', '설비 일일업무일지', this)">설비 일일업무일지</a>
+                    <a class="sub-item" onclick="checkWorkLogAccess('sobang', 'https://shoel265-hue.github.io/sb-work-log/', '소방 일일업무일지', this)">소방 일일업무일지</a>
+                    <a class="sub-item" onclick="checkWorkLogAccess('unsong', 'https://shoel265-hue.github.io/u-work-log/', '운송 일일업무일지', this)">운송 일일업무일지</a>
+                    <a class="sub-item" onclick="checkWorkLogAccess('report', 'https://shoel265-hue.github.io/day-work-log/', '일일 근무 보고서', this)">일일 근무 보고서</a>
+                    <a class="sub-item" onclick="checkWorkLogAccess('jeongi', 'https://shoel265-hue.github.io/e-work-log/', '전기 일일업무일지', this)">전기 일일업무일지</a>
+                    <a class="sub-item" onclick="checkWorkLogAccess('jumgeom', 'https://shoel265-hue.github.io/gg-work-log/', '점검 일일업무일지', this)">점검 일일업무일지</a>
+                    <a class="sub-item" onclick="checkWorkLogAccess('haengjeong', 'https://shoel265-hue.github.io/haengjeong-work-log/', '행정 일일업무일지', this)">행정 일일업무일지</a>
+                    <a class="sub-item" onclick="checkWorkLogAccess('ipjusa_mihwa', 'https://shoel265-hue.github.io/ipjusa-mihwa-work-log/', '입주사미화 일일업무일지', this)">입주사미화 일일업무일지</a>
+                </div>
+
+                <!-- 🔑 자재관리대장 -->
+                <a class="menu-item" onclick="loadSharedContent('https://shoel265-hue.github.io/material-management-syste/', '2. 자재관리대장', this)">
+                    <div class="menu-item-left"><span class="icon">📦</span> <span>2. 자재관리대장</span></div>
+                </a>
+
+                <!-- 🔑 공기구관리대장 -->
+                <a class="menu-item" onclick="loadSharedContent('https://shoel265-hue.github.io/tool-management-system/', '3. 공기구관리대장', this)">
+                    <div class="menu-item-left"><span class="icon">🔧</span> <span>3. 공기구관리대장</span></div>
+                </a>
+
+                <!-- 🔑 위험성평가 -->
+                <a class="menu-item" onclick="checkRiskAccess('https://shoel265-hue.github.io/team-risk-assessment/', '4. 위험성평가', this)">
+                    <div class="menu-item-left"><span class="icon">⚠️</span> <span>4. 위험성평가</span></div>
+                </a>
+
+                <div class="menu-category" style="margin-top: 15px;">시스템 설정</div>
+                <a class="menu-item" id="setting-menu-btn" onclick="openSystemSettings(this)">
+                    <div class="menu-item-left"><span class="icon">⚙️</span> <span>시스템 환경설정</span></div>
+                </a>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div class="top-navbar">
+                <div class="top-title" id="current-page-title">통합 포털 대시보드</div>
+                <div class="top-right-btns">
+                    <button class="top-btn" onclick="goHome()">🏠 홈으로</button>
+                    <button class="top-btn logout" onclick="processLogout()">로그아웃</button>
+                </div>
+            </div>
+            
+            <div class="viewport" id="viewport-container">
+                <div class="home-bg" id="home-background">
+                    <div class="welcome-card-glass">
+                        <h2>🏢 통합 시설관리 스마트 포털</h2>
+                        <p>좌측 메뉴에서 원하는 업무일지 또는 관리대장을 선택하세요.<br>안전하고 효율적인 시설 운영을 위한 통합 관리가 시작됩니다.</p>
+                    </div>
+                </div>
+
+                <!-- ⚙️️ 최고 관리자 전용 시스템 환경설정 패널 -->
+                <div class="setting-panel" id="setting-panel">
+                    <div class="setting-container">
+                        <h2>⚙️ 최고 관리자 계정 변경</h2>
+                        <div class="setting-group">
+                            <label>관리자 아이디</label>
+                            <input type="text" id="setting-admin-id" placeholder="관리자 아이디">
+                        </div>
+                        <div class="setting-group">
+                            <label>새로운 비밀번호</label>
+                            <input type="password" id="setting-admin-pw" placeholder="새 비밀번호 입력">
+                        </div>
+                        <button class="setting-btn" onclick="saveAdminSettings()" style="margin-bottom: 25px;">관리자 정보 저장</button>
+
+                        <h2>👥 팀별 로그인 계정 관리</h2>
+                        <button class="btn-add" onclick="addTeamAccountRow()">+ 팀 계정 추가</button>
+                        <table class="team-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 25%;">팀 명칭</th>
+                                    <th style="width: 25%;">아이디</th>
+                                    <th style="width: 30%;">비밀번호</th>
+                                    <th style="width: 20%;">관리</th>
+                                </tr>
+                            </thead>
+                            <tbody id="team-accounts-tbody"><!-- 동적 생성 --></tbody>
+                        </table>
+                        <button class="setting-btn" onclick="saveTeamAccounts()" style="background-color: #10b981;">팀 계정 변경사항 저장</button>
+                    </div>
+                </div>
+
+                <iframe id="content-iframe" src=""></iframe>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= 3. 스크립트 기능 ================= -->
+    <script>
+        let adminId = localStorage.getItem('portal_admin_id') || "admin";
+        let adminPw = localStorage.getItem('portal_admin_pw') || "8888";
+
+        let defaultTeamAccounts = [
+            { team: "건축팀", id: "geonchuk", pw: "1111" },
+            { team: "냉동", id: "refrig", pw: "1111" },
+            { team: "미화팀", id: "mihwa", pw: "1111" },
+            { team: "입주사미화", id: "ipjusa_mihwa", pw: "1111" },
+            { team: "설비팀", id: "seolbi", pw: "1111" },
+            { team: "소방팀", id: "sobang", pw: "1111" },
+            { team: "운송", id: "unsong", pw: "1111" },
+            { team: "전기팀", id: "jeongi", pw: "1111" },
+            { team: "점검팀", id: "jumgeom", pw: "1111" },
+            { team: "행정", id: "haengjeong", pw: "1111" }
+        ];
+
+        let storedAccounts = JSON.parse(localStorage.getItem('portal_team_accounts_v4'));
+        let teamAccounts = storedAccounts ? storedAccounts : defaultTeamAccounts;
+
+        let currentLoginUser = null;
+
+        window.onload = function() {
+            refreshLoginSelectBox();
+            document.getElementById('login-pw').value = "";
+        };
+
+        function refreshLoginSelectBox() {
+            const selectBox = document.getElementById('login-id-select');
+            let optionsHtml = `<option value="${adminId}">최고관리자 (${adminId})</option>`;
+            
+            teamAccounts.forEach(acc => {
+                optionsHtml += `<option value="${acc.id}">${acc.team} (${acc.id})</option>`;
+            });
+            selectBox.innerHTML = optionsHtml;
+        }
+
+        function processLogin() {
+            const inputId = document.getElementById('login-id-select').value;
+            const inputPw = document.getElementById('login-pw').value.trim();
+            
+            if (!inputPw) {
+                alert("⚠️ 비밀번호를 입력해 주세요.");
+                return;
+            }
+
+            if (inputId === adminId && inputPw === adminPw) {
+                currentLoginUser = { type: "admin", name: "최고관리자", id: adminId, teamName: "ALL" };
+                applyLoginSuccess();
+                return;
+            }
+
+            const matchedTeam = teamAccounts.find(acc => acc.id === inputId && acc.pw === inputPw);
+            if (matchedTeam) {
+                currentLoginUser = { type: "team", name: matchedTeam.team, id: matchedTeam.id, teamName: matchedTeam.team };
+                applyLoginSuccess();
+                return;
+            }
+
+            alert("⚠️ 비밀번호가 올바르지 않습니다.");
+            document.getElementById('login-pw').value = '';
+            document.getElementById('login-pw').focus();
+        }
+
+        function applyLoginSuccess() {
+            sessionStorage.setItem('log_authenticated', 'true');
+            document.getElementById('login-wrapper').style.display = 'none';
+            document.getElementById('main-wrapper').style.display = 'flex';
+
+            document.getElementById('display-name').innerText = currentLoginUser.name;
+            document.getElementById('display-id').innerText = currentLoginUser.id;
+            document.getElementById('display-role').innerText = (currentLoginUser.type === "admin") ? "최고관리자" : "팀 담당자";
+
+            const settingBtn = document.getElementById('setting-menu-btn');
+            if (currentLoginUser.type === "team") {
+                settingBtn.style.display = "none";
+            } else {
+                settingBtn.style.display = "flex";
+            }
+        }
+
+        function processLogout() {
+            if (confirm("로그아웃 하시겠습니까?")) {
+                sessionStorage.removeItem('log_authenticated');
+                currentLoginUser = null;
+                document.getElementById('main-wrapper').style.display = 'none';
+                document.getElementById('login-wrapper').style.display = 'flex';
+                document.getElementById('login-pw').value = "";
+                refreshLoginSelectBox();
+                goHome();
+            }
+        }
+
+        function checkWorkLogAccess(targetKey, url, titleText, element) {
+            if (currentLoginUser && currentLoginUser.type === "team") {
+                if (currentLoginUser.id === "sobang") {
+                    if (targetKey !== 'sobang' && targetKey !== 'report') {
+                        alert("⚠️ 소방팀 계정으로는 [소방 일일업무일지]와 [일일 근무 보고서]만 열람/작성하실 수 있습니다.");
+                        return;
+                    }
+                } else {
+                    if (targetKey !== currentLoginUser.id) {
+                        alert(`⚠️ ${currentLoginUser.teamName} 계정으로는 [${titleText}]에 접근하실 수 없습니다.`);
+                        return;
+                    }
+                }
+            }
+
+            let finalUrl = url;
+            if (currentLoginUser && currentLoginUser.type === "team") {
+                finalUrl += (url.includes('?') ? '&' : '?') + 'team=' + encodeURIComponent(currentLoginUser.teamName);
+            }
+            loadContent(finalUrl, titleText, element);
+        }
+
+        function checkRiskAccess(baseUrl, titleText, element) {
+            let finalUrl = baseUrl;
+            if (currentLoginUser && currentLoginUser.type === "team") {
+                let separator = baseUrl.includes('?') ? '&' : '?';
+                let teamName = currentLoginUser.teamName;
+                finalUrl += separator + 'team=' + encodeURIComponent(teamName) + '&dept=' + encodeURIComponent(teamName) + '&forceTeam=' + encodeURIComponent(teamName);
+            }
+            loadContent(finalUrl, titleText, element);
+        }
+
+        function loadSharedContent(baseUrl, titleText, element) {
+            let finalUrl = baseUrl;
+            if (currentLoginUser && currentLoginUser.type === "team") {
+                let separator = baseUrl.includes('?') ? '&' : '?';
+                let teamName = currentLoginUser.teamName;
+                finalUrl += separator + 'team=' + encodeURIComponent(teamName) + '&dept=' + encodeURIComponent(teamName);
+            }
+            loadContent(finalUrl, titleText, element);
+        }
+
+        function openSystemSettings(element) {
+            if (currentLoginUser.type !== "admin") return;
+
+            document.getElementById('current-page-title').innerText = "시스템 환경설정";
+            
+            document.querySelectorAll('.sub-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            if(element) element.classList.add('active');
+
+            const iframe = document.getElementById('content-iframe');
+            const bg = document.getElementById('home-background');
+            const settingPanel = document.getElementById('setting-panel');
+
+            document.getElementById('setting-admin-id').value = adminId;
+            document.getElementById('setting-admin-pw').value = "";
+
+            renderTeamAccountsTable();
+
+            iframe.style.display = 'none';
+            bg.style.display = 'none';
+            settingPanel.style.display = 'block';
+        }
+
+        function saveAdminSettings() {
+            const newId = document.getElementById('setting-admin-id').value.trim();
+            const newPw = document.getElementById('setting-admin-pw').value.trim();
+
+            if (!newId || !newPw) {
+                alert("⚠️ 아이디와 비밀번호를 모두 입력해 주세요.");
+                return;
+            }
+
+            adminId = newId;
+            adminPw = newPw;
+
+            localStorage.setItem('portal_admin_id', adminId);
+            localStorage.setItem('portal_admin_pw', adminPw);
+            refreshLoginSelectBox();
+
+            alert("✅ 관리자 계정 정보가 성공적으로 변경되었습니다!");
+        }
+
+        function renderTeamAccountsTable() {
+            const tbody = document.getElementById('team-accounts-tbody');
+            tbody.innerHTML = "";
+
+            teamAccounts.forEach((acc, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><input type="text" class="t-name" value="${acc.team}" placeholder="예: 건축팀 또는 냉동"></td>
+                        <td><input type="text" class="t-id" value="${acc.id}" placeholder="아이디"></td>
+                        <td><input type="text" class="t-pw" value="${acc.pw}" placeholder="비밀번호"></td>
+                        <td><button class="btn-del" onclick="deleteTeamAccountRow(${index})">삭제</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function addTeamAccountRow() {
+            teamAccounts.push({ team: "신규팀", id: "new_id", pw: "0000" });
+            renderTeamAccountsTable();
+        }
+
+        function deleteTeamAccountRow(index) {
+            teamAccounts.splice(index, 1);
+            renderTeamAccountsTable();
+        }
+
+        function saveTeamAccounts() {
+            const rows = document.querySelectorAll('#team-accounts-tbody tr');
+            let updatedAccounts = [];
+
+            rows.forEach(row => {
+                const team = row.querySelector('.t-name').value.trim();
+                const id = row.querySelector('.t-id').value.trim();
+                const pw = row.querySelector('.t-pw').value.trim();
+
+                if (team && id && pw) {
+                    updatedAccounts.push({ team, id, pw });
+                }
+            });
+
+            teamAccounts = updatedAccounts;
+            localStorage.setItem('portal_team_accounts_v4', JSON.stringify(teamAccounts));
+            refreshLoginSelectBox();
+            alert("✅ 팀별 로그인 계정 정보가 성공적으로 저장되었습니다!");
+        }
+
+        function toggleSubMenu(submenuId, element) {
+            const submenu = document.getElementById(submenuId);
+            submenu.classList.toggle('open');
+        }
+
+        function loadContent(url, titleText, element) {
+            document.getElementById('current-page-title').innerText = titleText;
+            
+            document.querySelectorAll('.sub-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            if(element) element.classList.add('active');
+
+            const iframe = document.getElementById('content-iframe');
+            const bg = document.getElementById('home-background');
+            const settingPanel = document.getElementById('setting-panel');
+
+            if(!url) {
+                alert("준비 중인 시스템입니다.");
+                return;
+            }
+            
+            sessionStorage.setItem('log_authenticated', 'true');
+
+            settingPanel.style.display = 'none';
+            bg.style.display = 'none';
+            iframe.style.display = 'block';
+            iframe.src = url;
+        }
+
+        function goHome() {
+            document.getElementById('current-page-title').innerText = "통합 포털 대시보드";
+            document.querySelectorAll('.sub-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            
+            const iframe = document.getElementById('content-iframe');
+            const bg = document.getElementById('home-background');
+            const settingPanel = document.getElementById('setting-panel');
+
+            iframe.src = "";
+            iframe.style.display = 'none';
+            settingPanel.style.display = 'none';
+            bg.style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
