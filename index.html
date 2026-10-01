@@ -8,18 +8,16 @@
         * { box-sizing: border-box; font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; margin: 0; padding: 0; }
         body, html { width: 100%; height: 100%; background-color: #f4f6f9; color: #333; overflow: hidden; }
 
-        /* ================= 1. 로그인 화면 스타일 (모바일 최적화) ================= */
+        /* ================= 1. 로그인 화면 스타일 ================= */
         #login-wrapper {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             display: flex; justify-content: center; align-items: center; z-index: 9999;
-            padding: 15px;
-            overflow-y: auto;
+            padding: 15px; overflow-y: auto;
         }
         .login-card {
             width: 100%; max-width: 460px; background: #fff; border-radius: 8px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3); overflow: hidden;
-            margin: auto;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3); overflow: hidden; margin: auto;
         }
         .login-banner {
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80') center/cover;
@@ -40,46 +38,40 @@
         .login-footer { background: #0f172a; color: #94a3b8; text-align: center; padding: 8px; font-size: 10px; }
 
         /* ================= 2. 대시보드 메인 화면 스타일 ================= */
-        #main-wrapper {
-            width: 100vw; height: 100vh; display: flex; overflow: hidden;
-        }
+        #main-wrapper { width: 100vw; height: 100vh; display: flex; overflow: hidden; }
         .sidebar {
             width: 260px; background-color: #1e293b; color: #cbd5e1; display: flex; flex-direction: column; border-right: 1px solid #334155; flex-shrink: 0; z-index: 10;
         }
         .sidebar-header {
-            padding: 15px; background-color: #0f172a; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #334155;
+            padding: 12px 15px; background-color: #0f172a; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #334155;
         }
-        .user-avatar { width: 32px; height: 32px; background: #475569; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #fff; flex-shrink: 0; }
+        .user-avatar { width: 30px; height: 30px; background: #475569; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #fff; flex-shrink: 0; }
         .user-info .name { font-weight: bold; font-size: 12px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 170px; }
         .user-info .role { font-size: 10px; color: #94a3b8; }
 
-        .sidebar-menu { flex: 1; padding: 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; }
-        .menu-category { font-size: 10px; font-weight: bold; color: #64748b; padding: 6px 8px 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .sidebar-menu { flex: 1; padding: 8px 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 3px; }
+        .menu-category { font-size: 10px; font-weight: bold; color: #64748b; padding: 4px 6px 2px; text-transform: uppercase; letter-spacing: 0.5px; }
         
         .menu-item {
-            display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-radius: 6px; color: #cbd5e1; text-decoration: none; font-size: 12px; transition: 0.2s; cursor: pointer;
+            display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; border-radius: 6px; color: #cbd5e1; text-decoration: none; font-size: 12px; transition: 0.2s; cursor: pointer;
         }
         .menu-item:hover, .menu-item.active { background-color: #334155; color: #ffffff; }
         .menu-item-left { display: flex; align-items: center; gap: 8px; }
-        .menu-item span.icon { font-size: 14px; }
+        .menu-item span.icon { font-size: 13px; }
         .arrow { font-size: 9px; transition: transform 0.2s; }
 
-        .sub-menu {
-            display: none; flex-direction: column; gap: 2px; padding-left: 24px; margin: 2px 0;
-        }
+        .sub-menu { display: none; flex-direction: column; gap: 2px; padding-left: 22px; margin: 2px 0; }
         .sub-menu.open { display: flex; }
-        .sub-item {
-            padding: 6px 8px; border-radius: 4px; color: #94a3b8; text-decoration: none; font-size: 11px; cursor: pointer; transition: 0.2s;
-        }
+        .sub-item { padding: 5px 8px; border-radius: 4px; color: #94a3b8; text-decoration: none; font-size: 11px; cursor: pointer; transition: 0.2s; }
         .sub-item:hover, .sub-item.active { background-color: #334155; color: #ffffff; font-weight: bold; }
 
         .content-area { flex: 1; display: flex; flex-direction: column; background-color: #f8fafc; overflow: hidden; position: relative; }
         .top-navbar {
-            height: 45px; background: #ffffff; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; padding: 0 15px; flex-shrink: 0; z-index: 10;
+            height: 42px; background: #ffffff; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; padding: 0 15px; flex-shrink: 0; z-index: 10;
         }
-        .top-title { font-size: 13px; font-weight: bold; color: #1e293b; }
+        .top-title { font-size: 12px; font-weight: bold; color: #1e293b; }
         .top-right-btns { display: flex; gap: 6px; }
-        .top-btn { padding: 4px 10px; background: #e2e8f0; border: none; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; color: #334155; }
+        .top-btn { padding: 3px 8px; background: #e2e8f0; border: none; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; color: #334155; }
         .top-btn:hover { background: #cbd5e1; }
         .top-btn.logout { background: #fee2e2; color: #dc2626; }
         .top-btn.logout:hover { background: #fecaca; }
@@ -93,27 +85,17 @@
         }
 
         .welcome-card-glass {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            padding: 30px 20px;
-            border-radius: 14px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            text-align: center;
-            max-width: 550px;
-            width: 100%;
-            z-index: 2;
+            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5); padding: 30px 20px; border-radius: 14px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); text-align: center; max-width: 550px; width: 100%; z-index: 2;
         }
-        .welcome-card-glass h2 { color: #0f172a; margin-bottom: 10px; font-size: 20px; font-weight: 800; }
-        .welcome-card-glass p { color: #334155; font-size: 13px; line-height: 1.5; font-weight: 500; }
+        .welcome-card-glass h2 { color: #0f172a; margin-bottom: 10px; font-size: 18px; font-weight: 800; }
+        .welcome-card-glass p { color: #334155; font-size: 12px; line-height: 1.5; font-weight: 500; }
 
         /* 시스템 환경설정 화면 스타일 */
-        .setting-panel {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #f8fafc; z-index: 5; display: none; padding: 20px; overflow-y: auto;
-        }
+        .setting-panel { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #f8fafc; z-index: 5; display: none; padding: 20px; overflow-y: auto; }
         .setting-container { max-width: 800px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .setting-container h2 { font-size: 16px; color: #1e293b; margin-bottom: 12px; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px; }
+        .setting-container h2 { font-size: 15px; color: #1e293b; margin-bottom: 12px; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px; }
         .setting-group { margin-bottom: 12px; }
         .setting-group label { display: block; font-size: 11px; font-weight: bold; color: #475569; margin-bottom: 4px; }
         .setting-group input { width: 100%; height: 32px; padding: 4px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; }
@@ -129,60 +111,24 @@
         .btn-add { padding: 4px 8px; background: #10b981; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin-bottom: 8px; }
         .btn-add:hover { background: #059669; }
 
-        /* 아이프레임 영역 완전 밀착 설정 (하단 공란 제거) */
-        #content-iframe {
-            width: 100%; height: 100%; border: none; background: #fff; display: none; position: absolute; top: 0; left: 0;
-        }
+        /* 아이프레임 영역 */
+        #content-iframe { width: 100%; height: 100%; border: none; background: #fff; display: none; position: absolute; top: 0; left: 0; }
 
         /* ================= 📱 스마트폰 모바일 반응형 전용 스타일 (768px 이하) ================= */
         @media screen and (max-width: 768px) {
-            #main-wrapper {
-                flex-direction: column; /* 상하 배치 */
-            }
+            #main-wrapper { flex-direction: column; }
             .sidebar {
-                width: 100% !important;
-                height: 125px; /* 상단 메뉴 높이를 컴팩트하게 고정하여 상단 잘림 방지 */
-                max-height: 125px;
-                overflow-y: auto; /* 메뉴 내부만 스크롤되도록 처리 */
-                flex-shrink: 0;
+                width: 100% !important; height: 115px; max-height: 115px;
+                overflow-y: auto; flex-shrink: 0;
             }
-            .sidebar-header {
-                padding: 8px 12px;
-            }
-            .sidebar-menu {
-                padding: 4px 10px;
-            }
-            .content-area {
-                flex: 1;
-                width: 100%;
-                height: calc(100vh - 125px);
-                overflow: hidden;
-            }
-            .top-navbar {
-                padding: 0 10px;
-                height: 38px;
-            }
-            .top-title {
-                font-size: 11px;
-            }
-            .top-btn {
-                padding: 3px 6px;
-                font-size: 10px;
-            }
-            .viewport {
-                position: relative;
-                width: 100%;
-                height: calc(100% - 38px);
-                overflow: hidden;
-            }
-            #content-iframe {
-                width: 100% !important;
-                height: 100% !important;
-                border: none !important;
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
+            .sidebar-header { padding: 6px 12px; }
+            .sidebar-menu { padding: 4px 10px; }
+            .content-area { flex: 1; width: 100%; height: calc(100vh - 115px); overflow: hidden; }
+            .top-navbar { padding: 0 10px; height: 35px; } /* 상단바 높이를 더 슬림하게 줄여 여백 밀림 방지 */
+            .top-title { font-size: 11px; }
+            .top-btn { padding: 2px 6px; font-size: 10px; }
+            .viewport { position: relative; width: 100%; height: calc(100% - 35px); overflow: hidden; }
+            #content-iframe { width: 100% !important; height: 100% !important; border: none !important; position: absolute; top: 0; left: 0; }
         }
 
         @media print {
@@ -253,22 +199,19 @@
                     <a class="sub-item" onclick="checkWorkLogAccess('ipjusa_mihwa', 'https://shoel265-hue.github.io/ipjusa-mihwa-work-log/', '입주사미화 일일업무일지', this)">입주사미화 일일업무일지</a>
                 </div>
 
-                <!-- 🔑 자재관리대장 -->
                 <a class="menu-item" onclick="loadSharedContent('https://shoel265-hue.github.io/material-management-syste/', '2. 자재관리대장', this)">
                     <div class="menu-item-left"><span class="icon">📦</span> <span>2. 자재관리대장</span></div>
                 </a>
 
-                <!-- 🔑 공기구관리대장 -->
                 <a class="menu-item" onclick="loadSharedContent('https://shoel265-hue.github.io/tool-management-system/', '3. 공기구관리대장', this)">
                     <div class="menu-item-left"><span class="icon">🔧</span> <span>3. 공기구관리대장</span></div>
                 </a>
 
-                <!-- 🔑 위험성평가 -->
                 <a class="menu-item" onclick="checkRiskAccess('https://shoel265-hue.github.io/team-risk-assessment/', '4. 위험성평가', this)">
                     <div class="menu-item-left"><span class="icon">⚠️</span> <span>4. 위험성평가</span></div>
                 </a>
 
-                <div class="menu-category" style="margin-top: 10px;">시스템 설정</div>
+                <div class="menu-category" style="margin-top: 8px;">시스템 설정</div>
                 <a class="menu-item" id="setting-menu-btn" onclick="openSystemSettings(this)">
                     <div class="menu-item-left"><span class="icon">⚙️</span> <span>시스템 환경설정</span></div>
                 </a>
@@ -292,7 +235,6 @@
                     </div>
                 </div>
 
-                <!-- ⚙ 최고 관리자 전용 시스템 환경설정 패널 -->
                 <div class="setting-panel" id="setting-panel">
                     <div class="setting-container">
                         <h2>⚙️ 최고 관리자 계정 변경</h2>
@@ -372,7 +314,7 @@
             const inputPw = document.getElementById('login-pw').value.trim();
             
             if (!inputPw) {
-                alert("⚠️ 비밀번호를 입력해 주세요.");
+                alert("⚠️️ 비밀번호를 입력해 주세요.");
                 return;
             }
 
@@ -580,6 +522,21 @@
             bg.style.display = 'none';
             iframe.style.display = 'block';
             iframe.src = url;
+
+            // 자재/공기구 대장 등의 내부 상단 헤더 숨김 처리를 위한 스타일 주입 시도
+            iframe.onload = function() {
+                try {
+                    let iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    let styleElem = iframeDoc.createElement('style');
+                    styleElem.innerHTML = `
+                        /* 서브 페이지 내부의 상단 헤더/타이틀 영역 강제 숨김 */
+                        header, .header, .top-header, .page-header, h1:first-of-type { display: none !important; }
+                    `;
+                    iframeDoc.head.appendChild(styleElem);
+                } catch(e) {
+                    // 보안 정책(CORS)으로 인해 외부 도메인 내부 조작이 제한될 경우 무시
+                }
+            };
         }
 
         function goHome() {
