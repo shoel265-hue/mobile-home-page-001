@@ -65,13 +65,13 @@
         .sub-item { padding: 5px 8px; border-radius: 4px; color: #94a3b8; text-decoration: none; font-size: 11px; cursor: pointer; transition: 0.2s; }
         .sub-item:hover, .sub-item.active { background-color: #334155; color: #ffffff; font-weight: bold; }
 
-        .content-area { flex: 1; display: flex; flex-direction: column; background-color: #f8fafc; overflow: hidden; position: relative; }
+        .content-area { flex: 1; display: flex; flex-direction: column; background-color: #f8fafc; overflow: hidden; position: relative; width: calc(100vw - 260px); }
         .top-navbar {
-            height: 42px; background: #ffffff; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; padding: 0 15px; flex-shrink: 0; z-index: 10;
+            height: 48px; background: #ffffff; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; padding: 0 16px; flex-shrink: 0; z-index: 10;
         }
-        .top-title { font-size: 12px; font-weight: bold; color: #1e293b; }
+        .top-title { font-size: 13px; font-weight: bold; color: #1e293b; }
         .top-right-btns { display: flex; gap: 6px; }
-        .top-btn { padding: 3px 8px; background: #e2e8f0; border: none; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; color: #334155; }
+        .top-btn { padding: 4px 10px; background: #e2e8f0; border: none; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; color: #334155; }
         .top-btn:hover { background: #cbd5e1; }
         .top-btn.logout { background: #fee2e2; color: #dc2626; }
         .top-btn.logout:hover { background: #fecaca; }
@@ -118,16 +118,19 @@
         @media screen and (max-width: 768px) {
             #main-wrapper { flex-direction: column; }
             .sidebar {
-                width: 100% !important; height: 115px; max-height: 115px;
+                width: 100% !important; height: 120px; max-height: 120px;
                 overflow-y: auto; flex-shrink: 0;
             }
             .sidebar-header { padding: 6px 12px; }
             .sidebar-menu { padding: 4px 10px; }
-            .content-area { flex: 1; width: 100%; height: calc(100vh - 115px); overflow: hidden; }
-            .top-navbar { padding: 0 10px; height: 35px; } /* 상단바 높이를 더 슬림하게 줄여 여백 밀림 방지 */
-            .top-title { font-size: 11px; }
-            .top-btn { padding: 2px 6px; font-size: 10px; }
-            .viewport { position: relative; width: 100%; height: calc(100% - 35px); overflow: hidden; }
+            
+            /* 콘텐츠 영역 가로 잘림 현상 방지 및 여백 최적화 */
+            .content-area { width: 100% !important; height: calc(100vh - 120px); overflow: hidden; }
+            .top-navbar { padding: 0 12px; height: 42px; margin-top: 0; } 
+            .top-title { font-size: 12px; }
+            .top-btn { padding: 3px 8px; font-size: 10px; }
+            
+            .viewport { position: relative; width: 100%; height: calc(100% - 42px); overflow: hidden; }
             #content-iframe { width: 100% !important; height: 100% !important; border: none !important; position: absolute; top: 0; left: 0; }
         }
 
@@ -314,7 +317,7 @@
             const inputPw = document.getElementById('login-pw').value.trim();
             
             if (!inputPw) {
-                alert("⚠️️ 비밀번호를 입력해 주세요.");
+                alert("⚠ 비밀번호를 입력해 주세요.");
                 return;
             }
 
@@ -523,19 +526,15 @@
             iframe.style.display = 'block';
             iframe.src = url;
 
-            // 자재/공기구 대장 등의 내부 상단 헤더 숨김 처리를 위한 스타일 주입 시도
             iframe.onload = function() {
                 try {
                     let iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
                     let styleElem = iframeDoc.createElement('style');
                     styleElem.innerHTML = `
-                        /* 서브 페이지 내부의 상단 헤더/타이틀 영역 강제 숨김 */
                         header, .header, .top-header, .page-header, h1:first-of-type { display: none !important; }
                     `;
                     iframeDoc.head.appendChild(styleElem);
-                } catch(e) {
-                    // 보안 정책(CORS)으로 인해 외부 도메인 내부 조작이 제한될 경우 무시
-                }
+                } catch(e) {}
             };
         }
 
