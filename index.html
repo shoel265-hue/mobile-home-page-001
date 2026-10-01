@@ -8,33 +8,36 @@
         * { box-sizing: border-box; font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; margin: 0; padding: 0; }
         body, html { width: 100%; height: 100%; background-color: #f4f6f9; color: #333; overflow: hidden; }
 
-        /* ================= 1. 로그인 화면 스타일 ================= */
+        /* ================= 1. 로그인 화면 스타일 (모바일 최적화) ================= */
         #login-wrapper {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             display: flex; justify-content: center; align-items: center; z-index: 9999;
+            padding: 15px;
+            overflow-y: auto;
         }
         .login-card {
-            width: 100%; max-width: 500px; background: #fff; border-radius: 8px;
+            width: 100%; max-width: 460px; background: #fff; border-radius: 8px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.3); overflow: hidden;
+            margin: auto;
         }
         .login-banner {
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80') center/cover;
-            padding: 40px 30px; color: white;
+            padding: 25px 20px; color: white; text-align: center;
         }
-        .login-banner h1 { font-size: 28px; font-weight: 900; letter-spacing: 2px; margin-bottom: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-        .login-banner p { font-size: 13px; opacity: 0.9; }
+        .login-banner h1 { font-size: 22px; font-weight: 900; letter-spacing: 2px; margin-bottom: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .login-banner p { font-size: 12px; opacity: 0.9; line-height: 1.4; }
         
-        .login-form-area { padding: 30px; background: #f8fafc; display: flex; flex-direction: column; gap: 12px; }
-        .login-title-bar { font-size: 14px; font-weight: bold; color: #475569; letter-spacing: 1px; margin-bottom: 5px; border-bottom: 2px solid #cbd5e1; padding-bottom: 5px; }
+        .login-form-area { padding: 20px; background: #f8fafc; display: flex; flex-direction: column; gap: 10px; }
+        .login-title-bar { font-size: 13px; font-weight: bold; color: #475569; letter-spacing: 1px; margin-bottom: 3px; border-bottom: 2px solid #cbd5e1; padding-bottom: 4px; }
         
-        .input-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
-        .input-row label { width: 90px; font-size: 12px; font-weight: bold; color: #64748b; text-align: right; }
-        .input-row select, .input-row input { flex: 1; height: 32px; padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px; background-color: #fff; cursor: pointer; }
+        .input-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+        .input-row label { width: 80px; font-size: 11px; font-weight: bold; color: #64748b; text-align: right; }
+        .input-row select, .input-row input { flex: 1; height: 34px; padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px; background-color: #fff; cursor: pointer; }
         
-        .btn-login { width: 100px; height: 75px; background: #1d4ed8; color: white; border: none; border-radius: 4px; font-weight: bold; font-size: 14px; cursor: pointer; transition: 0.2s; }
+        .btn-login { width: 100%; height: 42px; background: #1d4ed8; color: white; border: none; border-radius: 4px; font-weight: bold; font-size: 14px; cursor: pointer; transition: 0.2s; margin-top: 5px; }
         .btn-login:hover { background: #1e40af; }
-        .login-footer { background: #0f172a; color: #94a3b8; text-align: center; padding: 10px; font-size: 11px; }
+        .login-footer { background: #0f172a; color: #94a3b8; text-align: center; padding: 8px; font-size: 10px; }
 
         /* ================= 2. 대시보드 메인 화면 스타일 ================= */
         #main-wrapper {
@@ -44,49 +47,49 @@
             width: 260px; background-color: #1e293b; color: #cbd5e1; display: flex; flex-direction: column; border-right: 1px solid #334155; flex-shrink: 0; z-index: 10;
         }
         .sidebar-header {
-            padding: 20px 15px; background-color: #0f172a; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #334155;
+            padding: 15px; background-color: #0f172a; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #334155;
         }
-        .user-avatar { width: 36px; height: 36px; background: #475569; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #fff; }
-        .user-info .name { font-weight: bold; font-size: 13px; color: #fff; }
-        .user-info .role { font-size: 11px; color: #94a3b8; }
+        .user-avatar { width: 32px; height: 32px; background: #475569; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #fff; flex-shrink: 0; }
+        .user-info .name { font-weight: bold; font-size: 12px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 170px; }
+        .user-info .role { font-size: 10px; color: #94a3b8; }
 
-        .sidebar-menu { flex: 1; padding: 15px 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 5px; }
-        .menu-category { font-size: 11px; font-weight: bold; color: #64748b; padding: 8px 10px 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .sidebar-menu { flex: 1; padding: 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; }
+        .menu-category { font-size: 10px; font-weight: bold; color: #64748b; padding: 6px 8px 2px; text-transform: uppercase; letter-spacing: 0.5px; }
         
         .menu-item {
-            display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border-radius: 6px; color: #cbd5e1; text-decoration: none; font-size: 13px; transition: 0.2s; cursor: pointer;
+            display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-radius: 6px; color: #cbd5e1; text-decoration: none; font-size: 12px; transition: 0.2s; cursor: pointer;
         }
         .menu-item:hover, .menu-item.active { background-color: #334155; color: #ffffff; }
-        .menu-item-left { display: flex; align-items: center; gap: 10px; }
-        .menu-item span.icon { font-size: 15px; }
-        .arrow { font-size: 10px; transition: transform 0.2s; }
+        .menu-item-left { display: flex; align-items: center; gap: 8px; }
+        .menu-item span.icon { font-size: 14px; }
+        .arrow { font-size: 9px; transition: transform 0.2s; }
 
         .sub-menu {
-            display: none; flex-direction: column; gap: 3px; padding-left: 28px; margin: 3px 0;
+            display: none; flex-direction: column; gap: 2px; padding-left: 24px; margin: 2px 0;
         }
         .sub-menu.open { display: flex; }
         .sub-item {
-            padding: 8px 10px; border-radius: 4px; color: #94a3b8; text-decoration: none; font-size: 12px; cursor: pointer; transition: 0.2s;
+            padding: 6px 8px; border-radius: 4px; color: #94a3b8; text-decoration: none; font-size: 11px; cursor: pointer; transition: 0.2s;
         }
         .sub-item:hover, .sub-item.active { background-color: #334155; color: #ffffff; font-weight: bold; }
 
         .content-area { flex: 1; display: flex; flex-direction: column; background-color: #f8fafc; overflow: hidden; position: relative; }
         .top-navbar {
-            height: 55px; background: #ffffff; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; flex-shrink: 0; z-index: 10;
+            height: 45px; background: #ffffff; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; padding: 0 15px; flex-shrink: 0; z-index: 10;
         }
-        .top-title { font-size: 15px; font-weight: bold; color: #1e293b; }
-        .top-right-btns { display: flex; gap: 10px; }
-        .top-btn { padding: 5px 12px; background: #e2e8f0; border: none; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; color: #334155; }
+        .top-title { font-size: 13px; font-weight: bold; color: #1e293b; }
+        .top-right-btns { display: flex; gap: 6px; }
+        .top-btn { padding: 4px 10px; background: #e2e8f0; border: none; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; color: #334155; }
         .top-btn:hover { background: #cbd5e1; }
         .top-btn.logout { background: #fee2e2; color: #dc2626; }
         .top-btn.logout:hover { background: #fecaca; }
 
-        .viewport { flex: 1; position: relative; overflow-y: auto; display: flex; justify-content: center; align-items: stretch; background-color: #f8fafc; }
+        .viewport { flex: 1; position: relative; width: 100%; height: 100%; overflow: hidden; display: flex; flex-direction: column; background-color: #f8fafc; }
         
         .home-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(15, 23, 42, 0.5), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
-            display: flex; justify-content: center; align-items: center; z-index: 1;
+            display: flex; justify-content: center; align-items: center; z-index: 1; padding: 20px;
         }
 
         .welcome-card-glass {
@@ -94,41 +97,41 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.5);
-            padding: 45px 50px;
-            border-radius: 16px;
+            padding: 30px 20px;
+            border-radius: 14px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             text-align: center;
-            max-width: 650px;
-            width: 90%;
+            max-width: 550px;
+            width: 100%;
             z-index: 2;
         }
-        .welcome-card-glass h2 { color: #0f172a; margin-bottom: 12px; font-size: 24px; font-weight: 800; }
-        .welcome-card-glass p { color: #334155; font-size: 14px; line-height: 1.6; font-weight: 500; }
+        .welcome-card-glass h2 { color: #0f172a; margin-bottom: 10px; font-size: 20px; font-weight: 800; }
+        .welcome-card-glass p { color: #334155; font-size: 13px; line-height: 1.5; font-weight: 500; }
 
         /* 시스템 환경설정 화면 스타일 */
         .setting-panel {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #f8fafc; z-index: 5; display: none; padding: 30px; overflow-y: auto;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #f8fafc; z-index: 5; display: none; padding: 20px; overflow-y: auto;
         }
-        .setting-container { max-width: 800px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .setting-container h2 { font-size: 18px; color: #1e293b; margin-bottom: 15px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
-        .setting-group { margin-bottom: 15px; }
-        .setting-group label { display: block; font-size: 12px; font-weight: bold; color: #475569; margin-bottom: 5px; }
-        .setting-group input { width: 100%; height: 34px; padding: 4px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px; }
-        .setting-btn { padding: 8px 16px; background: #2563eb; color: white; border: none; border-radius: 4px; font-weight: bold; font-size: 13px; cursor: pointer; transition: 0.2s; }
+        .setting-container { max-width: 800px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .setting-container h2 { font-size: 16px; color: #1e293b; margin-bottom: 12px; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px; }
+        .setting-group { margin-bottom: 12px; }
+        .setting-group label { display: block; font-size: 11px; font-weight: bold; color: #475569; margin-bottom: 4px; }
+        .setting-group input { width: 100%; height: 32px; padding: 4px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; }
+        .setting-btn { padding: 6px 14px; background: #2563eb; color: white; border: none; border-radius: 4px; font-weight: bold; font-size: 12px; cursor: pointer; transition: 0.2s; }
         .setting-btn:hover { background: #1d4ed8; }
 
-        .team-table { width: 100%; border-collapse: collapse; margin-top: 10px; margin-bottom: 15px; }
-        .team-table th, .team-table td { border: 1px solid #cbd5e1; padding: 6px 8px; text-align: center; font-size: 12px; }
+        .team-table { width: 100%; border-collapse: collapse; margin-top: 8px; margin-bottom: 12px; }
+        .team-table th, .team-table td { border: 1px solid #cbd5e1; padding: 5px 6px; text-align: center; font-size: 11px; }
         .team-table th { background-color: #f1f5f9; color: #334155; }
-        .team-table input { width: 100%; height: 26px; padding: 2px 5px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 12px; text-align: center; }
-        .btn-del { padding: 3px 8px; background: #dc2626; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 11px; }
+        .team-table input { width: 100%; height: 24px; padding: 2px 4px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px; text-align: center; }
+        .btn-del { padding: 2px 6px; background: #dc2626; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 10px; }
         .btn-del:hover { background: #b91c1c; }
-        .btn-add { padding: 4px 10px; background: #10b981; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; margin-bottom: 10px; }
+        .btn-add { padding: 4px 8px; background: #10b981; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin-bottom: 8px; }
         .btn-add:hover { background: #059669; }
 
-        /* 아이프레임 기본 스타일 (PC) */
+        /* 아이프레임 영역 완전 밀착 설정 (하단 공란 제거) */
         #content-iframe {
-            width: 100%; height: 100%; border: none; background: #fff; display: none;
+            width: 100%; height: 100%; border: none; background: #fff; display: none; position: absolute; top: 0; left: 0;
         }
 
         /* ================= 📱 스마트폰 모바일 반응형 전용 스타일 (768px 이하) ================= */
@@ -138,41 +141,40 @@
             }
             .sidebar {
                 width: 100% !important;
-                height: auto;
-                max-height: 140px; /* 상단 메뉴 영역 컴팩트하게 조정 */
-                overflow-y: auto;
+                height: 125px; /* 상단 메뉴 높이를 컴팩트하게 고정하여 상단 잘림 방지 */
+                max-height: 125px;
+                overflow-y: auto; /* 메뉴 내부만 스크롤되도록 처리 */
                 flex-shrink: 0;
             }
             .sidebar-header {
-                padding: 6px 10px;
+                padding: 8px 12px;
             }
             .sidebar-menu {
-                padding: 4px 8px;
+                padding: 4px 10px;
             }
             .content-area {
                 flex: 1;
                 width: 100%;
-                height: calc(100vh - 140px);
+                height: calc(100vh - 125px);
                 overflow: hidden;
             }
             .top-navbar {
                 padding: 0 10px;
-                height: 40px;
+                height: 38px;
             }
             .top-title {
-                font-size: 12px;
+                font-size: 11px;
             }
             .top-btn {
-                padding: 3px 8px;
+                padding: 3px 6px;
                 font-size: 10px;
             }
             .viewport {
                 position: relative;
                 width: 100%;
-                height: calc(100% - 40px);
+                height: calc(100% - 38px);
                 overflow: hidden;
             }
-            /* 스마트폰에서 아이프레임이 빈 공간 없이 화면 전체를 깔끔하게 채우도록 설정 */
             #content-iframe {
                 width: 100% !important;
                 height: 100% !important;
@@ -180,7 +182,6 @@
                 position: absolute;
                 top: 0;
                 left: 0;
-                transform: none !important; /* 불필요한 축소 배율 제거하여 여백 방지 */
             }
         }
 
@@ -189,7 +190,7 @@
             body, html { overflow: visible !important; height: auto !important; background: #fff !important; -webkit-print-color-adjust: exact; }
             .sidebar, .top-navbar, #login-wrapper, #setting-panel, .home-bg { display: none !important; }
             .content-area, .viewport { height: auto !important; overflow: visible !important; position: static !important; display: block !important; }
-            #content-iframe { display: block !important; width: 100% !important; height: auto !important; border: none !important; position: static !important; transform: none !important; }
+            #content-iframe { display: block !important; width: 100% !important; height: auto !important; border: none !important; position: static !important; }
         }
     </style>
 </head>
@@ -204,19 +205,15 @@
             </div>
             <div class="login-form-area">
                 <div class="login-title-bar">MEMBER ACCESS</div>
-                <div style="display: flex; gap: 15px; align-items: center;">
-                    <div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
-                        <div class="input-row">
-                            <label>USER ID</label>
-                            <select id="login-id-select"><!-- 동적 로드 --></select>
-                        </div>
-                        <div class="input-row">
-                            <label>PASSWORD</label>
-                            <input type="password" id="login-pw" placeholder="비밀번호 입력" autocomplete="current-password" onkeyup="if(event.key==='Enter') processLogin()">
-                        </div>
-                    </div>
-                    <button class="btn-login" onclick="processLogin()">LOG IN</button>
+                <div class="input-row">
+                    <label>USER ID</label>
+                    <select id="login-id-select"><!-- 동적 로드 --></select>
                 </div>
+                <div class="input-row">
+                    <label>PASSWORD</label>
+                    <input type="password" id="login-pw" placeholder="비밀번호 입력" autocomplete="current-password" onkeyup="if(event.key==='Enter') processLogin()">
+                </div>
+                <button class="btn-login" onclick="processLogin()">LOG IN</button>
             </div>
             <div class="login-footer">COPYRIGHT &copy; FACILITY MANAGEMENT. ALL RIGHTS RESERVED.</div>
         </div>
@@ -271,7 +268,7 @@
                     <div class="menu-item-left"><span class="icon">⚠️</span> <span>4. 위험성평가</span></div>
                 </a>
 
-                <div class="menu-category" style="margin-top: 15px;">시스템 설정</div>
+                <div class="menu-category" style="margin-top: 10px;">시스템 설정</div>
                 <a class="menu-item" id="setting-menu-btn" onclick="openSystemSettings(this)">
                     <div class="menu-item-left"><span class="icon">⚙️</span> <span>시스템 환경설정</span></div>
                 </a>
@@ -282,7 +279,7 @@
             <div class="top-navbar">
                 <div class="top-title" id="current-page-title">통합 포털 대시보드</div>
                 <div class="top-right-btns">
-                    <button class="top-btn" onclick="goHome()">🏠 홈으로</button>
+                    <button class="top-btn" onclick="goHome()">🏠 홈</button>
                     <button class="top-btn logout" onclick="processLogout()">로그아웃</button>
                 </div>
             </div>
@@ -307,7 +304,7 @@
                             <label>새로운 비밀번호</label>
                             <input type="password" id="setting-admin-pw" placeholder="새 비밀번호 입력">
                         </div>
-                        <button class="setting-btn" onclick="saveAdminSettings()" style="margin-bottom: 25px;">관리자 정보 저장</button>
+                        <button class="setting-btn" onclick="saveAdminSettings()" style="margin-bottom: 20px;">관리자 정보 저장</button>
 
                         <h2>👥 팀별 로그인 계정 관리</h2>
                         <button class="btn-add" onclick="addTeamAccountRow()">+ 팀 계정 추가</button>
@@ -430,7 +427,7 @@
             if (currentLoginUser && currentLoginUser.type === "team") {
                 if (currentLoginUser.id === "sobang") {
                     if (targetKey !== 'sobang' && targetKey !== 'report') {
-                        alert("⚠️️ 소방팀 계정으로는 [소방 일일업무일지]와 [일일 근무 보고서]만 열람/작성하실 수 있습니다.");
+                        alert("⚠ 소방팀 계정으로는 [소방 일일업무일지]와 [일일 근무 보고서]만 열람/작성하실 수 있습니다.");
                         return;
                     }
                 } else {
@@ -517,7 +514,7 @@
             teamAccounts.forEach((acc, index) => {
                 tbody.innerHTML += `
                     <tr>
-                        <td><input type="text" class="t-name" value="${acc.team}" placeholder="예: 건축팀 또는 냉동"></td>
+                        <td><input type="text" class="t-name" value="${acc.team}" placeholder="팀 명칭"></td>
                         <td><input type="text" class="t-id" value="${acc.id}" placeholder="아이디"></td>
                         <td><input type="text" class="t-pw" value="${acc.pw}" placeholder="비밀번호"></td>
                         <td><button class="btn-del" onclick="deleteTeamAccountRow(${index})">삭제</button></td>
